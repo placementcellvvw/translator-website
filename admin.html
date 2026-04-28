@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Database Records</h2>
+<table border="1">
+<tr><th>Name</th><th>Email</th><th>Phone</th><th>Message</th></tr>
+{% for d in data %}
+<tr>
+<td>{{ d.name }}</td>
+<td>{{ d.email }}</td>
+<td>{{ d.phone }}</td>
+<td>{{ d.message }}</td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>
