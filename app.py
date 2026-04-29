@@ -19,7 +19,6 @@ class Contact(db.Model):
 
 with app.app_context():
     db.create_all()
-
 @app.route("/", methods=["GET", "POST"])
 def home():
     msg = ""
@@ -27,25 +26,24 @@ def home():
 
     if request.method == "POST":
 
-        # TEMP TRANSLATOR (no crash)
         text = request.form.get("translate_text")
-if text:
-    try:
-        url = "https://translate.googleapis.com/translate_a/single"
-        params = {
-            "client": "gtx",
-            "sl": "en",
-            "tl": "hi",
-            "dt": "t",
-            "q": text
-        }
-        response = requests.get(url, params=params)
-        result = response.json()
-        translated_text = result[0][0][0]
-    except:
-        translated_text = "Translation error"
+        if text:
+            try:
+                import requests
+                url = "https://translate.googleapis.com/translate_a/single"
+                params = {
+                    "client": "gtx",
+                    "sl": "en",
+                    "tl": "hi",
+                    "dt": "t",
+                    "q": text
+                }
+                response = requests.get(url, params=params)
+                result = response.json()
+                translated_text = result[0][0][0]
+            except:
+                translated_text = "Translation error"
 
-        # CONTACT FORM
         if request.form.get("name"):
             new_contact = Contact(
                 name=request.form["name"],
@@ -58,7 +56,6 @@ if text:
             msg = "Data saved successfully!"
 
     return render_template("index.html", message=msg, translated=translated_text)
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
