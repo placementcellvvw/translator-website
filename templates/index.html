@@ -1,25 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DAIVIK Translation Work</title>
+
 <style>
-body { font-family: Arial; background: linear-gradient(to right, #36d1dc, #5b86e5); text-align: center; color: white; }
-.box { background: white; color: black; padding: 30px; margin: 30px auto; width: 60%; border-radius: 15px; }
-input, textarea { width: 80%; padding: 10px; margin: 10px; }
-button { background: #36d1dc; color: white; padding: 10px 20px; border: none; border-radius: 20px; }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+    animation: fadeIn 2s ease;
+}
+
+.hero h1 {
+    font-size: 45px;
+}
+
+.hero p {
+    font-size: 18px;
+}
+
+/* Glass Card */
+.container {
+    width: 70%;
+    margin: auto;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.3);
+    animation: slideUp 1.5s ease;
+}
+
+/* Inputs */
+input, textarea {
+    width: 90%;
+    padding: 12px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* Buttons */
+button {
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+/* WhatsApp */
+.whatsapp {
+    display: inline-block;
+    margin-top: 20px;
+    background: #25D366;
+    padding: 12px 25px;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.whatsapp:hover {
+    transform: scale(1.1);
+}
+
+/* Features */
+.features {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+
+.feature {
+    width: 30%;
+    background: rgba(255,255,255,0.15);
+    padding: 20px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideUp {
+    from {transform: translateY(50px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
 </style>
+
 </head>
+
 <body>
-<h1>🌐 English → Hindi Translation Service</h1>
-<div class="box">
-<form method="POST">
-<input name="name" placeholder="Name" required><br>
-<input name="email" placeholder="Email" required><br>
-<input name="phone" placeholder="Phone" required><br>
-<textarea name="message" placeholder="Work Details"></textarea><br>
-<button type="submit">Submit</button>
-</form>
-<p>{{ message }}</p>
+
+<div class="navbar">
+🌐 DAIVIK Translation Work
 </div>
+
+<div class="hero">
+<h1>Professional Translation Service</h1>
+<p>English → Hindi | Fast | Accurate | Affordable</p>
+</div>
+
+<div class="container">
+
+<h2>📩 Contact for Work</h2>
+
+<form method="POST">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="email" name="email" placeholder="Your Email" required>
+<input type="text" name="phone" placeholder="Phone Number" required>
+<textarea name="message" placeholder="Enter your work details"></textarea>
+
+<br>
+<button type="submit">🚀 Submit Request</button>
+</form>
+
+<p style="color: lightgreen;">{{ message }}</p>
+
+<a class="whatsapp" href="https://wa.me/91XXXXXXXXXX">
+💬 Chat on WhatsApp
+</a>
+
+<div class="features">
+<div class="feature">
+<h3>⚡ Fast Delivery</h3>
+<p>Get your work done quickly</p>
+</div>
+
+<div class="feature">
+<h3>🎯 High Accuracy</h3>
+<p>Professional quality translation</p>
+</div>
+
+<div class="feature">
+<h3>💰 Affordable</h3>
+<p>Best price guarantee</p>
+</div>
+</div>
+
+</div>
+
+<footer>
+© 2026 DAIVIK Translation Work
+</footer>
+
 </body>
 </html>
