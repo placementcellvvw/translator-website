@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
-from googletrans import Translator   # ✅ ADD
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -10,8 +9,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-translator = Translator()  # ✅ ADD
-
+text = request.form.get("translate_text")
+if text:
+    translated_text = "Translator coming soon..."
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
