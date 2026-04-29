@@ -9,70 +9,59 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #141e30, #243b55);
     color: white;
-    overflow-x: hidden;
 }
 
 /* Navbar */
 .navbar {
-    padding: 20px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    background: rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    background: rgba(0,0,0,0.4);
     backdrop-filter: blur(10px);
-}
-
-/* Hero */
-.hero {
+    padding: 15px;
     text-align: center;
-    padding: 60px 20px;
-    animation: fadeIn 2s ease;
+    font-size: 22px;
+    font-weight: bold;
 }
 
-.hero h1 {
-    font-size: 45px;
-}
-
-.hero p {
-    font-size: 18px;
-}
-
-/* Glass Card */
-.container {
-    width: 70%;
+/* Section */
+.section {
+    width: 80%;
     margin: auto;
-    padding: 30px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(15px);
-    box-shadow: 0px 10px 30px rgba(0,0,0,0.3);
-    animation: slideUp 1.5s ease;
+    padding: 40px 0;
 }
 
-/* Inputs */
+/* Card */
+.card {
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    margin: 20px 0;
+}
+
+/* Input */
 input, textarea {
     width: 90%;
-    padding: 12px;
+    padding: 10px;
     margin: 10px;
     border-radius: 10px;
     border: none;
 }
 
-/* Buttons */
-button {
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: white;
+/* Button */
+.btn {
+    background: linear-gradient(45deg, #ff512f, #dd2476);
     padding: 12px 30px;
-    border: none;
     border-radius: 30px;
+    border: none;
+    color: white;
     cursor: pointer;
-    font-size: 16px;
     transition: 0.3s;
 }
 
-button:hover {
+.btn:hover {
     transform: scale(1.1);
 }
 
@@ -85,48 +74,12 @@ button:hover {
     border-radius: 30px;
     color: white;
     text-decoration: none;
-    transition: 0.3s;
-}
-
-.whatsapp:hover {
-    transform: scale(1.1);
-}
-
-/* Features */
-.features {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 40px;
-}
-
-.feature {
-    width: 30%;
-    background: rgba(255,255,255,0.15);
-    padding: 20px;
-    border-radius: 15px;
-    transition: 0.3s;
-}
-
-.feature:hover {
-    transform: translateY(-10px);
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-@keyframes slideUp {
-    from {transform: translateY(50px); opacity: 0;}
-    to {transform: translateY(0); opacity: 1;}
 }
 
 /* Footer */
 footer {
     text-align: center;
     padding: 20px;
-    margin-top: 40px;
 }
 </style>
 
@@ -138,46 +91,39 @@ footer {
 🌐 DAIVIK Translation Work
 </div>
 
-<div class="hero">
-<h1>Professional Translation Service</h1>
-<p>English → Hindi | Fast | Accurate | Affordable</p>
-</div>
+<div class="section">
 
-<div class="container">
-
-<h2>📩 Contact for Work</h2>
+<!-- 🤖 AI TRANSLATOR -->
+<div class="card">
+<h2>🤖 AI Translator</h2>
 
 <form method="POST">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="email" name="email" placeholder="Your Email" required>
-<input type="text" name="phone" placeholder="Phone Number" required>
-<textarea name="message" placeholder="Enter your work details"></textarea>
-
+<textarea name="translate_text" placeholder="Enter English text"></textarea>
 <br>
-<button type="submit">🚀 Submit Request</button>
+<button class="btn">Translate to Hindi</button>
 </form>
 
-<p style="color: lightgreen;">{{ message }}</p>
+<h3 style="color:lightgreen;">{{ translated }}</h3>
+</div>
 
-<a class="whatsapp" href="https://wa.me/91XXXXXXXXXX">
+<!-- 📩 CONTACT FORM -->
+<div class="card">
+<h2>📩 Contact Us</h2>
+
+<form method="POST">
+<input name="name" placeholder="Name" required>
+<input name="email" placeholder="Email" required>
+<input name="phone" placeholder="Phone" required>
+<textarea name="message" placeholder="Work Details"></textarea>
+<button class="btn">Submit</button>
+</form>
+
+<p style="color:lightgreen;">{{ message }}</p>
+
+<a class="whatsapp" href="https://wa.me/918851304467">
 💬 Chat on WhatsApp
 </a>
 
-<div class="features">
-<div class="feature">
-<h3>⚡ Fast Delivery</h3>
-<p>Get your work done quickly</p>
-</div>
-
-<div class="feature">
-<h3>🎯 High Accuracy</h3>
-<p>Professional quality translation</p>
-</div>
-
-<div class="feature">
-<h3>💰 Affordable</h3>
-<p>Best price guarantee</p>
-</div>
 </div>
 
 </div>
