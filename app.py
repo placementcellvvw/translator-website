@@ -9,9 +9,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-text = request.form.get("translate_text")
-if text:
-    translated_text = "Translator coming soon..."
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -25,20 +22,16 @@ with app.app_context():
 @app.route("/", methods=["GET", "POST"])
 def home():
     msg = ""
-    translated_text = ""   # ✅ ADD
+    translated_text = ""
 
     if request.method == "POST":
 
-        # 🔹 AI TRANSLATION PART
+        # TEMP TRANSLATOR (no crash)
         text = request.form.get("translate_text")
         if text:
-            try:
-                result = translator.translate(text, dest="hi")
-                translated_text = result.text
-            except:
-                translated_text = "Translation error"
+            translated_text = "Translation feature will be active soon"
 
-        # 🔹 CONTACT FORM PART
+        # CONTACT FORM
         if request.form.get("name"):
             new_contact = Contact(
                 name=request.form["name"],
