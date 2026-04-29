@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
+import requests
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -28,8 +29,21 @@ def home():
 
         # TEMP TRANSLATOR (no crash)
         text = request.form.get("translate_text")
-        if text:
-            translated_text = "Translation feature will be active soon"
+if text:
+    try:
+        url = "https://translate.googleapis.com/translate_a/single"
+        params = {
+            "client": "gtx",
+            "sl": "en",
+            "tl": "hi",
+            "dt": "t",
+            "q": text
+        }
+        response = requests.get(url, params=params)
+        result = response.json()
+        translated_text = result[0][0][0]
+    except:
+        translated_text = "Translation error"
 
         # CONTACT FORM
         if request.form.get("name"):
