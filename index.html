@@ -1,33 +1,136 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DAIVIK Translation Work</title>
+
 <style>
-body { font-family: Arial; background: linear-gradient(to right, #36d1dc, #5b86e5); text-align: center; color: white; }
-.box { background: white; color: black; padding: 30px; margin: 30px auto; width: 60%; border-radius: 15px; }
-input, textarea { width: 80%; padding: 10px; margin: 10px; }
-button { background: #36d1dc; color: white; padding: 10px 20px; border: none; border-radius: 20px; }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+}
+
+/* Navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Section */
+.section {
+    width: 80%;
+    margin: auto;
+    padding: 40px 0;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    margin: 20px 0;
+}
+
+/* Input */
+input, textarea {
+    width: 90%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* Button */
+.btn {
+    background: linear-gradient(45deg, #ff512f, #dd2476);
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+/* WhatsApp */
+.whatsapp {
+    display: inline-block;
+    margin-top: 20px;
+    background: #25D366;
+    padding: 12px 25px;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+}
 </style>
+
 </head>
+
 <body>
-<h1>🌐 Professional English → Hindi Translation Service</h1>
-<div class="box">
-<form method="POST">
-<input name="name" placeholder="Name" required><br>
-<input name="email" placeholder="Email" required><br>
-<input name="phone" placeholder="Phone" required><br>
-<textarea name="message" placeholder="Work Details"></textarea><br>
-<button type="submit">Submit</button>
-</form>
-<p>{{ Daivik Translation Works }}</p>
+
+<div class="navbar">
+🌐 DAIVIK Translation Work
+</div>
+
+<div class="section">
+
+<!-- 🤖 AI TRANSLATOR -->
+<div class="card">
 <h2>🤖 AI Translator</h2>
+
 <form method="POST">
 <textarea name="translate_text" placeholder="Enter English text"></textarea>
 <br>
 <button class="btn">Translate to Hindi</button>
 </form>
 
-<h3>{{ translated }}</h3>
+<h3 style="color:lightgreen;">{{ translated }}</h3>
 </div>
+
+<!-- 📩 CONTACT FORM -->
+<div class="card">
+<h2>📩 Contact Us</h2>
+
+<form method="POST">
+<input name="name" placeholder="Name" required>
+<input name="email" placeholder="Email" required>
+<input name="phone" placeholder="Phone" required>
+<textarea name="message" placeholder="Work Details"></textarea>
+<button class="btn">Submit</button>
+</form>
+
+<p style="color:lightgreen;">{{ message }}</p>
+
+<a class="whatsapp" href="https://wa.me/918851304467">
+💬 Chat on WhatsApp
+</a>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 DAIVIK Translation Work
+</footer>
+
 </body>
 </html>
