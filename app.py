@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
+from googletrans import Translator   # ✅ ADD
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -8,6 +9,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+translator = Translator()  # ✅ ADD
 
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,17 +25,33 @@ with app.app_context():
 @app.route("/", methods=["GET", "POST"])
 def home():
     msg = ""
+    translated_text = ""   # ✅ ADD
+
     if request.method == "POST":
-        new_contact = Contact(
-            name=request.form["name"],
-            email=request.form["email"],
-            phone=request.form["phone"],
-            message=request.form["message"]
-        )
-        db.session.add(new_contact)
-        db.session.commit()
-        msg = "Data saved successfully!"
-    return render_template("index.html", message=msg)
+
+        # 🔹 AI TRANSLATION PART
+        text = request.form.get("translate_text")
+        if text:
+            try:
+                result = translator.translate(text, dest="hi")
+                translated_text = result.text
+            except:
+                translated_text = "Translation error"
+
+        # 🔹 CONTACT FORM PART
+        if request.form.get("name"):
+            new_contact = Contact(
+                name=request.form["name"],
+                email=request.form["email"],
+                phone=request.form["phone"],
+                message=request.form["message"]
+            )
+            db.session.add(new_contact)
+            db.session.commit()
+            msg = "Data saved successfully!"
+
+    return render_template("index.html", message=msg, translated=translated_text)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -42,12 +61,14 @@ def login():
             return redirect("/admin")
     return render_template("login.html")
 
+
 @app.route("/admin")
 def admin():
     if not session.get("admin"):
         return redirect("/login")
     data = Contact.query.all()
     return render_template("admin.html", data=data)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
