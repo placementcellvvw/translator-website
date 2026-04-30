@@ -8,9 +8,9 @@
 <style>
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3);
-    color: #1d1d1f;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
 }
 
 /* Navbar */
@@ -19,10 +19,11 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: white;
     padding: 15px;
+    font-size: 20px;
     font-weight: bold;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
 }
 
 .navbar img {
@@ -36,14 +37,15 @@ body {
     padding: 30px 0;
 }
 
-/* Card */
+/* Glass Card */
 .card {
-    background: white;
+    background: rgba(255,255,255,0.15);
     padding: 25px;
     border-radius: 20px;
     margin: 20px auto;
     width: 80%;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 /* Inputs */
@@ -52,27 +54,28 @@ input, textarea {
     padding: 12px;
     margin: 10px 0;
     border-radius: 10px;
-    border: 1px solid #ccc;
+    border: none;
 }
 
 /* Button */
 .btn {
-    background: linear-gradient(45deg, #007bff, #00c6ff);
+    background: linear-gradient(45deg, #ff7e5f, #feb47b);
     color: white;
     padding: 12px 25px;
     border-radius: 25px;
     border: none;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .btn:hover {
-    opacity: 0.9;
+    transform: scale(1.05);
 }
 
 /* Output */
 .output {
     margin-top: 10px;
-    color: green;
+    color: lightgreen;
     font-weight: bold;
 }
 
@@ -80,7 +83,7 @@ input, textarea {
 footer {
     text-align: center;
     padding: 20px;
-    color: gray;
+    color: white;
 }
 </style>
 
@@ -121,7 +124,7 @@ footer {
 <button class="btn">Submit</button>
 </form>
 
-<p style="color:green;">{{ message }}</p>
+<p style="color:lightgreen;">{{ message }}</p>
 
 <a href="https://wa.me/91XXXXXXXXXX" target="_blank">
     <button class="btn">Chat on WhatsApp</button>
