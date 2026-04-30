@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+</head>
+
+<body>
+
+<h2>Client Dashboard</h2>
+
+<form method="POST">
+<input name="name" placeholder="Enter your name">
+<button>Check</button>
+</form>
+
+<ul>
+{% for d in data %}
+<li>{{ d }}</li>
+{% endfor %}
+</ul>
+
+</body>
+</html>
