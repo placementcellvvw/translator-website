@@ -119,7 +119,12 @@ footer {
 </form>
 
 <p style="color:lightgreen;">{{ message }}</p>
+<h3>Upload File</h3>
 
+<form method="POST" action="/upload" enctype="multipart/form-data">
+<input type="file" name="file">
+<button class="btn">Upload</button>
+</form>
 <a class="whatsapp" href="https://wa.me/918851304467">
 💬 Chat on WhatsApp
 </a>
