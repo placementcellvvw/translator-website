@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, session
 import requests
 import os
-
+app = Flask(__name__)
+app.secret_key = "secret123"
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -15,9 +16,6 @@ def upload():
         return "File uploaded successfully!"
 
     return "No file selected"
-app = Flask(__name__)
-app.secret_key = "secret123"
-
 
 @app.route("/", methods=["GET", "POST"])
 def home():
