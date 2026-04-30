@@ -94,6 +94,9 @@ footer {
 <div class="navbar">
     <img src="{{ url_for('static', filename='logo.png') }}">
     <span>DAIVIK Translation Work</span>
+    <a href="/dashboard">
+        <button class="btn">Dashboard</button>
+    </a>
 </div>
 
 <div class="container">
@@ -110,9 +113,7 @@ footer {
 
 <div class="output">{{ translated }}</div>
 </div>
-<a href="/dashboard">
-    <button class="btn">Client Dashboard</button>
-</a>
+
 <!-- 📩 Contact Form -->
 <div class="card">
 <h2>📩 Contact Us</h2>
