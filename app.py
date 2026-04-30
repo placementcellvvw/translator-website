@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, redirect, session
 import requests
+import os
 
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app = Flask(__name__)
 app.secret_key = "secret123"
 
