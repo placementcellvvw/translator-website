@@ -40,7 +40,7 @@ def home():
             }
 
             try:
-                requests.post("YOUR_GOOGLE_SCRIPT_URL", json=data)
+                requests.post("https://script.google.com/macros/s/AKfycbz-P-LnBHYa27d6Bz2Q8ALJWZL_sfuht1TeJSfusSOBaLZvpAF4NlvBTK4Dqic-PIGW8w/exec", json=data)
                 msg = "Data saved successfully!"
             except:
                 msg = "Error saving data"
