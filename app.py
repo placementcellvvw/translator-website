@@ -1,24 +1,10 @@
 from flask import Flask, render_template, request, redirect, session
 import requests
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
-
-class Contact(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-    phone = db.Column(db.String(20))
-    message = db.Column(db.Text)
-
-with app.app_context():
-    db.create_all()
 @app.route("/", methods=["GET", "POST"])
 def home():
     msg = ""
@@ -26,10 +12,10 @@ def home():
 
     if request.method == "POST":
 
+        # 🤖 AI TRANSLATOR
         text = request.form.get("translate_text")
         if text:
             try:
-                import requests
                 url = "https://translate.googleapis.com/translate_a/single"
                 params = {
                     "client": "gtx",
@@ -44,19 +30,25 @@ def home():
             except:
                 translated_text = "Translation error"
 
+        # 📩 CONTACT FORM → GOOGLE SHEET
         if request.form.get("name"):
-            new_contact = Contact(
-                name=request.form["name"],
-                email=request.form["email"],
-                phone=request.form["phone"],
-                message=request.form["message"]
-            )
-            db.session.add(new_contact)
-            db.session.commit()
-            msg = "Data saved successfully!"
+            data = {
+                "name": request.form["name"],
+                "email": request.form["email"],
+                "phone": request.form["phone"],
+                "message": request.form["message"]
+            }
+
+            try:
+                requests.post("YOUR_GOOGLE_SCRIPT_URL", json=data)
+                msg = "Data saved successfully!"
+            except:
+                msg = "Error saving data"
 
     return render_template("index.html", message=msg, translated=translated_text)
 
+
+# 🔐 LOGIN
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -66,12 +58,12 @@ def login():
     return render_template("login.html")
 
 
+# 📊 ADMIN (simple placeholder now)
 @app.route("/admin")
 def admin():
     if not session.get("admin"):
         return redirect("/login")
-    data = Contact.query.all()
-    return render_template("admin.html", data=data)
+    return "<h2>Admin Panel (Data in Google Sheets)</h2>"
 
 
 if __name__ == "__main__":
