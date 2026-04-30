@@ -8,87 +8,79 @@
 <style>
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #141e30, #243b55);
-    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    color: #1d1d1f;
 }
 
 /* Navbar */
-.navbar {
-    position: sticky;
-    top: 0;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(10px);
-    padding: 15px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-}
 .navbar {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    background: white;
+    padding: 15px;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .navbar img {
     height: 50px;
 }
-/* Section */
-.section {
-    width: 80%;
+
+/* Container */
+.container {
+    width: 90%;
     margin: auto;
-    padding: 40px 0;
+    padding: 30px 0;
 }
 
 /* Card */
 .card {
-    background: rgba(255,255,255,0.1);
+    background: white;
     padding: 25px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    margin: 20px 0;
+    border-radius: 20px;
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-/* Input */
+/* Inputs */
 input, textarea {
-    width: 90%;
-    padding: 10px;
-    margin: 10px;
+    width: 95%;
+    padding: 12px;
+    margin: 10px 0;
     border-radius: 10px;
-    border: none;
+    border: 1px solid #ccc;
 }
 
 /* Button */
 .btn {
-    background: linear-gradient(45deg, #ff512f, #dd2476);
-    padding: 12px 30px;
-    border-radius: 30px;
-    border: none;
+    background: linear-gradient(45deg, #007bff, #00c6ff);
     color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .btn:hover {
-    transform: scale(1.1);
+    opacity: 0.9;
 }
 
-/* WhatsApp */
-.whatsapp {
-    display: inline-block;
-    margin-top: 20px;
-    background: #25D366;
-    padding: 12px 25px;
-    border-radius: 30px;
-    color: white;
-    text-decoration: none;
+/* Output */
+.output {
+    margin-top: 10px;
+    color: green;
+    font-weight: bold;
 }
 
 /* Footer */
 footer {
     text-align: center;
     padding: 20px;
+    color: gray;
 }
 </style>
 
@@ -97,41 +89,42 @@ footer {
 <body>
 
 <div class="navbar">
-<img src="{{ url_for('static', filename='logo.png') }}" height="50">
-<span> DAIVIK Translation Work</span>
+    <img src="{{ url_for('static', filename='logo.png') }}">
+    <span>DAIVIK Translation Work</span>
 </div>
 
-<div class="section">
+<div class="container">
 
-<!-- 🤖 AI TRANSLATOR -->
+<!-- 🤖 AI Translator -->
 <div class="card">
 <h2>🤖 AI Translator</h2>
 
 <form method="POST">
 <textarea name="translate_text" placeholder="Enter English text"></textarea>
 <br>
-<button class="btn">Translate to Hindi</button>
+<button class="btn">Translate</button>
 </form>
 
-<h3 style="color:lightgreen;">{{ translated }}</h3>
+<div class="output">{{ translated }}</div>
 </div>
 
-<!-- 📩 CONTACT FORM -->
+<!-- 📩 Contact Form -->
 <div class="card">
 <h2>📩 Contact Us</h2>
 
 <form method="POST">
-<input name="name" placeholder="Name" required>
-<input name="email" placeholder="Email" required>
-<input name="phone" placeholder="Phone" required>
+<input name="name" placeholder="Your Name" required>
+<input name="email" placeholder="Your Email" required>
+<input name="phone" placeholder="Phone Number" required>
 <textarea name="message" placeholder="Work Details"></textarea>
+
 <button class="btn">Submit</button>
 </form>
 
-<p style="color:lightgreen;">{{ message }}</p>
+<p style="color:green;">{{ message }}</p>
 
-<a class="whatsapp" href="https://wa.me/918851304467">
-💬 Chat on WhatsApp
+<a href="https://wa.me/91XXXXXXXXXX" target="_blank">
+    <button class="btn">Chat on WhatsApp</button>
 </a>
 
 </div>
