@@ -4,6 +4,17 @@ import os
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route("/upload", methods=["POST"])
+def upload():
+    file = request.files.get("file")
+
+    if file and file.filename != "":
+        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+        file.save(filepath)
+        return "File uploaded successfully!"
+
+    return "No file selected"
 app = Flask(__name__)
 app.secret_key = "secret123"
 
