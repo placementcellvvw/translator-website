@@ -83,15 +83,7 @@ def admin():
     if not session.get("admin"):
         return redirect("/login")
     return "<h2>Admin Panel (Data in Google Sheets)</h2>"
-@app.route("/dashboard", methods=["GET", "POST"])
-def dashboard():
-    data = []
 
-    if request.method == "POST":
-        name = request.form["name"]
-        data.append("Hello " + name + ", your data is in Google Sheet")
-
-    return render_template("dashboard.html", data=data)
 
 if __name__ == "__main__":
     app.run(debug=True)
