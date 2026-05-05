@@ -66,15 +66,6 @@ def home():
                 msg = "Error saving data"
 
     return render_template("index.html", message=msg, translated=translated_text)
-@app.route("/upload", methods=["POST"])
-def upload():
-    file = request.files["file"]
-
-    if file:
-        file.save(os.path.join(UPLOAD_FOLDER, file.filename))
-        return "File uploaded!"
-
-    return "No file"
 
 # 🔐 LOGIN
 @app.route("/login", methods=["GET", "POST"])
