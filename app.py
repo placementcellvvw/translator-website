@@ -5,9 +5,13 @@ app = Flask(__name__)
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     data = []
-    if request.method == "POST":
-        name = request.form["name"]
-        data.append("Hello " + name)
+
+    try:
+        url = "https://script.google.com/macros/s/AKfycbylaa4SdWhJmYsWOz1jnqWWyqu6QfFpCRsS6e5tDAdwDWAqW5DB9M-4IIHFwqO1bwia/exec"
+        response = requests.get(url)
+        data = response.json()
+    except:
+        data = ["Error loading data"]
 
     return render_template("dashboard.html", data=data)
 app.secret_key = "secret123"
