@@ -2,6 +2,14 @@ from flask import Flask, render_template, request, redirect, session
 import requests
 import os
 app = Flask(__name__)
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
+    data = []
+    if request.method == "POST":
+        name = request.form["name"]
+        data.append("Hello " + name)
+
+    return render_template("dashboard.html", data=data)
 app.secret_key = "secret123"
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
