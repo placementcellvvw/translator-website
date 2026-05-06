@@ -69,7 +69,7 @@ def home():
             }
 
             response = requests.post(
-                "https://script.google.com/macros/s/AKfycbyJCBlQ1-xX9S-k_kxn-IM2KZtbT2NjrwZc6oPuHxZ6NRFM4Zw5z0Fz-7ruQkbwct8mFw/exec",
+                "https://script.google.com/macros/s/AKfycbxCzEnjWhBuqBCCjf0IR5hCOiusBqiWj17ohXKJ0NQLR6hbDqpBJ14Lxlq1xIQSBAJB3w/exec",
                 json=data
             )
 
