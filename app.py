@@ -1,34 +1,27 @@
 from flask import Flask, render_template, request, redirect, session
 import requests
-import os
+from flask_sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
-@app.route("/dashboard", methods=["GET", "POST"])
-def dashboard():
-    data = []
-
-    try:
-        url = "https://script.google.com/macros/s/AKfycbyJCBlQ1-xX9S-k_kxn-IM2KZtbT2NjrwZc6oPuHxZ6NRFM4Zw5z0Fz-7ruQkbwct8mFw/exec"
-        response = requests.get(url)
-        data = response.json()
-    except:
-        data = ["Error loading data"]
-
-    return render_template("dashboard.html", data=data)
 app.secret_key = "secret123"
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-@app.route("/upload", methods=["POST"])
-def upload():
-    file = request.files.get("file")
+# DATABASE (optional)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-    if file and file.filename != "":
-        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-        file.save(filepath)
-        return "File uploaded successfully!"
+# MODEL
+class Contact(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    phone = db.Column(db.String(20))
+    message = db.Column(db.Text)
 
-    return "No file selected"
+with app.app_context():
+    db.create_all()
 
+# HOME PAGE
 @app.route("/", methods=["GET", "POST"])
 def home():
     msg = ""
@@ -36,7 +29,7 @@ def home():
 
     if request.method == "POST":
 
-        # 🤖 AI TRANSLATOR
+        # 🔹 AI TRANSLATION
         text = request.form.get("translate_text")
         if text:
             try:
@@ -54,8 +47,20 @@ def home():
             except:
                 translated_text = "Translation error"
 
-        # 📩 CONTACT FORM → GOOGLE SHEET
+        # 🔹 CONTACT FORM + GOOGLE SHEET
         if request.form.get("name"):
+
+            # (Optional DB Save)
+            new_contact = Contact(
+                name=request.form["name"],
+                email=request.form["email"],
+                phone=request.form["phone"],
+                message=request.form["message"]
+            )
+            db.session.add(new_contact)
+            db.session.commit()
+
+            # 🔥 GOOGLE SHEET SEND
             data = {
                 "name": request.form["name"],
                 "email": request.form["email"],
@@ -63,15 +68,19 @@ def home():
                 "message": request.form["message"]
             }
 
-            try:
-                requests.post("https://script.google.com/macros/s/AKfycbyJCBlQ1-xX9S-k_kxn-IM2KZtbT2NjrwZc6oPuHxZ6NRFM4Zw5z0Fz-7ruQkbwct8mFw/exec", json=data)
-                msg = "Data saved successfully!"
-            except:
-                msg = "Error saving data"
+            response = requests.post(
+                "https://script.google.com/macros/s/AKfycbyJCBlQ1-xX9S-k_kxn-IM2KZtbT2NjrwZc6oPuHxZ6NRFM4Zw5z0Fz-7ruQkbwct8mFw/exec",
+                json=data
+            )
+
+            print("RESPONSE:", response.text)
+
+            msg = "Data saved successfully!"
 
     return render_template("index.html", message=msg, translated=translated_text)
 
-# 🔐 LOGIN
+
+# LOGIN
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -81,12 +90,13 @@ def login():
     return render_template("login.html")
 
 
-# 📊 ADMIN (simple placeholder now)
+# ADMIN PANEL
 @app.route("/admin")
 def admin():
     if not session.get("admin"):
         return redirect("/login")
-    return "<h2>Admin Panel (Data in Google Sheets)</h2>"
+    data = Contact.query.all()
+    return render_template("admin.html", data=data)
 
 
 if __name__ == "__main__":
