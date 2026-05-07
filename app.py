@@ -123,5 +123,36 @@ def dashboard():
 
     except Exception as e:
         return "Data load failed: " + str(e)
+
+@app.route('/upload_translation', methods=['POST'])
+def upload_translation():
+
+    file = request.files['file']
+    name = request.form['name']
+    email = request.form['email']
+    phone = request.form['phone']
+
+    if file:
+
+        filename = secure_filename(file.filename)
+
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+
+        file.save(filepath)
+
+        new_file = TranslationFile(
+            filename=filename,
+            customer_name=name,
+            email=email,
+            phone=phone,
+            paid=False
+        )
+
+        db.session.add(new_file)
+        db.session.commit()
+
+        return "File Uploaded Successfully"
+
+    return "Upload Failed"
 if __name__ == "__main__":
     app.run(debug=True)
