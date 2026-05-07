@@ -69,7 +69,7 @@ def home():
             }
 
             response = requests.post(
-                "https://script.google.com/macros/s/AKfycbxCzEnjWhBuqBCCjf0IR5hCOiusBqiWj17ohXKJ0NQLR6hbDqpBJ14Lxlq1xIQSBAJB3w/exec",
+                "https://script.google.com/macros/s/AKfycbwYO41lKGOvPvCCJj3456ERpLWV3hkGaDkM9Pse5wqwbNSrydveDKFfjYtrOM12Gopcwg/exec",
                 json=data
             )
 
@@ -101,7 +101,7 @@ def admin():
 @app.route("/dashboard")
 def dashboard():
     try:
-        url = "https://script.google.com/macros/s/AKfycbxCzEnjWhBuqBCCjf0IR5hCOiusBqiWj17ohXKJ0NQLR6hbDqpBJ14Lxlq1xIQSBAJB3w/exec"
+        url = "https://script.google.com/macros/s/AKfycbwYO41lKGOvPvCCJj3456ERpLWV3hkGaDkM9Pse5wqwbNSrydveDKFfjYtrOM12Gopcwg/exec"
 
         response = requests.get(url)
         data = response.json()
