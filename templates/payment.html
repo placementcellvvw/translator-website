@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Payment</title>
+
+    <style>
+
+        body{
+            font-family:sans-serif;
+            background:#0f172a;
+            color:white;
+            text-align:center;
+            padding:50px;
+        }
+
+        .box{
+            background:#1e293b;
+            padding:40px;
+            border-radius:20px;
+            max-width:500px;
+            margin:auto;
+        }
+
+        button{
+            background:#00ffcc;
+            color:black;
+            border:none;
+            padding:15px 25px;
+            border-radius:10px;
+            cursor:pointer;
+            font-size:18px;
+            margin-top:20px;
+        }
+
+        img{
+            margin-top:20px;
+            border-radius:15px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>Complete Payment</h1>
+
+    <h3>{{ file.filename }}</h3>
+
+    <p>Pay ₹99 to unlock translated file download</p>
+
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=8588992818@ptyes&pn=DAIVIKTranslation&am=99">
+
+    <br>
+
+    <a href="/payment_success/{{ file.id }}">
+        <button>Payment Done</button>
+    </a>
+
+</div>
+
+</body>
+</html>
