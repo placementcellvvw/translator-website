@@ -101,8 +101,14 @@ def admin():
 @app.route("/dashboard")
 def dashboard():
     try:
-        return render_template("dashboard.html")
+        url = "https://script.google.com/macros/s/AKfycbxCzEnjWhBuqBCCjf0IR5hCOiusBqiWj17ohXKJ0NQLR6hbDqpBJ14Lxlq1xIQSBAJB3w/exec"
+
+        response = requests.get(url)
+        data = response.json()
+
+        return render_template("dashboard.html", data=data)
+
     except Exception as e:
-        return str(e)
+        return "Data load failed: " + str(e)
 if __name__ == "__main__":
     app.run(debug=True)
