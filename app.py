@@ -30,6 +30,7 @@ class TranslationFile(db.Model):
     translated_file = db.Column(db.String(200))
     customer_name = db.Column(db.String(100))
     email = db.Column(db.String(100))
+    phone = db.Column(db.String(20))
     paid = db.Column(db.Boolean, default=False)
 with app.app_context():
     db.create_all()
