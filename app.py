@@ -18,6 +18,13 @@ class Contact(db.Model):
     phone = db.Column(db.String(20))
     message = db.Column(db.Text)
 
+class TranslationFile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(200))
+    translated_file = db.Column(db.String(200))
+    customer_name = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    paid = db.Column(db.Boolean, default=False)
 with app.app_context():
     db.create_all()
 
