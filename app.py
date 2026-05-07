@@ -1,8 +1,14 @@
 from flask import Flask, render_template, request, redirect, session
 import requests
 from flask_sqlalchemy import SQLAlchemy
-
+import os
+from werkzeug.utils import secure_filename
 app = Flask(__name__)
+UPLOAD_FOLDER = "uploads"
+TRANSLATED_FOLDER = "translated"
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(TRANSLATED_FOLDER, exist_ok=True)
 app.secret_key = "secret123"
 
 # DATABASE (optional)
