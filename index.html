@@ -3,121 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>DAIVIK Translation Work</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Animated Background */
+
+body::before{
+    content:'';
+    position:fixed;
+    width:200%;
+    height:200%;
+    background:
+    radial-gradient(circle,#ff0080 0%,transparent 25%),
+    radial-gradient(circle,#00ffee 0%,transparent 25%),
+    radial-gradient(circle,#7928ca 0%,transparent 25%);
+    animation: moveBg 15s linear infinite;
+    opacity:0.15;
+    z-index:-1;
+}
+
+@keyframes moveBg{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(-20%,-20%);}
+    100%{transform:translate(0,0);}
 }
 
 /* Navbar */
-.navbar {
-    position: sticky;
-    top: 0;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(10px);
-    padding: 15px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
+
+.navbar{
+    width:100%;
+    padding:20px;
+    text-align:center;
+    font-size:30px;
+    font-weight:700;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 4px 20px rgba(0,0,0,0.4);
 }
 
-/* Section */
-.section {
-    width: 80%;
-    margin: auto;
-    padding: 40px 0;
+/* Main Section */
+
+.section{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+    padding:50px 0;
 }
-/* Payment */
+
+/* Cards */
+
+.card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:25px;
+    padding:35px;
+    margin-bottom:40px;
+    backdrop-filter:blur(15px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Headings */
+
+h2{
+    margin-bottom:20px;
+    font-size:32px;
+}
+
+/* Inputs */
+
+input,
+textarea{
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    border:none;
+    border-radius:15px;
+    background:rgba(255,255,255,0.12);
+    color:white;
+    font-size:16px;
+    outline:none;
+}
+
+textarea{
+    min-height:120px;
+    resize:none;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#ddd;
+}
+
+/* Buttons */
+
+.btn{
+    margin-top:20px;
+    padding:14px 35px;
+    border:none;
+    border-radius:40px;
+    background:linear-gradient(45deg,#ff512f,#dd2476);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:600;
+    box-shadow:0 8px 20px rgba(221,36,118,0.4);
+}
+
+.btn:hover{
+    transform:scale(1.07);
+}
+
+/* Payment Box */
+
 .payment-box{
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    width: 320px;
-    margin: auto;
-    box-shadow: 0 0 25px rgba(0,0,0,0.3);
-    animation: float 3s ease-in-out infinite;
+    text-align:center;
+    background:rgba(255,255,255,0.08);
+    border-radius:25px;
+    padding:40px;
+    margin-bottom:40px;
+    backdrop-filter:blur(15px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    animation:float 3s ease-in-out infinite;
 }
 
 .payment-box img{
-    width: 250px;
-    border-radius: 20px;
-    margin-top: 15px;
+    width:260px;
+    margin-top:20px;
+    border-radius:20px;
+    background:white;
+    padding:10px;
 }
 
-.payment-box h2{
-    color: white;
-    font-size: 32px;
-}
-
-.payment-box h3,p{
-    color: white;
+.payment-box h3{
+    margin-top:20px;
 }
 
 @keyframes float{
-    0%{transform: translateY(0px);}
-    50%{transform: translateY(-10px);}
-    100%{transform: translateY(0px);}
-}    
-/* Card */
-.card {
-    background: rgba(255,255,255,0.1);
-    padding: 25px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    margin: 20px 0;
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-8px);}
+    100%{transform:translateY(0px);}
 }
 
-/* Input */
-input, textarea {
-    width: 90%;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    border: none;
+/* Upload */
+
+.upload-box{
+    margin-top:25px;
 }
 
-/* Button */
-.btn {
-    background: linear-gradient(45deg, #ff512f, #dd2476);
-    padding: 12px 30px;
-    border-radius: 30px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
+/* WhatsApp Button */
+
+.whatsapp{
+    display:inline-block;
+    margin-top:25px;
+    padding:14px 30px;
+    border-radius:40px;
+    background:#25D366;
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
 }
 
-.btn:hover {
-    transform: scale(1.1);
-}
-
-/* WhatsApp */
-.whatsapp {
-    display: inline-block;
-    margin-top: 20px;
-    background: #25D366;
-    padding: 12px 25px;
-    border-radius: 30px;
-    color: white;
-    text-decoration: none;
+.whatsapp:hover{
+    transform:scale(1.05);
 }
 
 /* Footer */
-footer {
-    text-align: center;
-    padding: 20px;
-}
-</style>
 
+footer{
+    text-align:center;
+    padding:30px;
+    background:rgba(255,255,255,0.06);
+    margin-top:50px;
+    font-size:15px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .navbar{
+        font-size:22px;
+    }
+
+    h2{
+        font-size:25px;
+    }
+
+    .card,
+    .payment-box{
+        padding:25px;
+    }
+
+    .payment-box img{
+        width:220px;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
+
+<!-- NAVBAR -->
 
 <div class="navbar">
 🌐 DAIVIK Translation Work
@@ -125,53 +242,126 @@ footer {
 
 <div class="section">
 
-<!-- 🤖 AI TRANSLATOR -->
+<!-- AI TRANSLATOR -->
+
 <div class="card">
+
 <h2>🤖 AI Translator</h2>
 
 <form method="POST">
-<textarea name="translate_text" placeholder="Enter English text"></textarea>
-<br>
-<button class="btn">Translate to Hindi</button>
+
+<textarea 
+name="translate_text" 
+placeholder="Enter English text here..."></textarea>
+
+<button class="btn">
+Translate to Hindi
+</button>
+
 </form>
 
-<h3 style="color:lightgreen;">{{ translated }}</h3>
+<h3 style="margin-top:20px;color:#00ffae;">
+{{ translated }}
+</h3>
+
 </div>
 
- <div class="payment-box">
+<!-- PAYMENT SECTION -->
 
-    <h2>Scan & Pay</h2>
+<div class="payment-box">
 
-    <img 
-    src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9818354183@ybl&pn=DAIVIK Translation Work&am=99&cu=INR"
-    alt="UPI QR Code">
+<h2>💳 Scan & Pay</h2>
 
-    <h3>UPI ID: 9818354183@ybl</h3>
-    <p>Amount: ₹99</p>
+<img 
+src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9818354183@ybl&pn=DAIVIK Translation Work&am=99&cu=INR"
+alt="UPI QR Code">
 
-</div>   
-    
-<!-- 📩 CONTACT FORM -->
+<h3>UPI ID: 9818354183@ybl</h3>
+
+<p style="margin-top:10px;font-size:20px;">
+Amount: ₹99
+</p>
+
+<p style="margin-top:15px;color:#00ffae;">
+After payment send screenshot on WhatsApp
+</p>
+
+</div>
+
+<!-- CONTACT FORM -->
+
 <div class="card">
+
 <h2>📩 Contact Us</h2>
 
 <form method="POST">
-<input name="name" placeholder="Name" required>
-<input name="email" placeholder="Email" required>
-<input name="phone" placeholder="Phone" required>
-<textarea name="message" placeholder="Work Details"></textarea>
-<button class="btn">Submit</button>
+
+<input 
+name="name" 
+placeholder="Your Name" 
+required>
+
+<input 
+name="email" 
+placeholder="Your Email" 
+required>
+
+<input 
+name="phone" 
+placeholder="Your Phone Number" 
+required>
+
+<textarea 
+name="message" 
+placeholder="Describe your translation work..."></textarea>
+
+<button class="btn">
+Submit
+</button>
+
 </form>
 
-<p style="color:lightgreen;">{{ message }}</p>
-<h3>Upload File</h3>
+<p style="margin-top:20px;color:#00ffae;">
+{{ message }}
+</p>
 
-<form method="POST" action="/upload" enctype="multipart/form-data">
-<input type="file" name="file">
-<button class="btn">Upload</button>
+<!-- FILE UPLOAD -->
+
+<div class="upload-box">
+
+<h3 style="margin-top:30px;">
+📂 Upload File
+</h3>
+
+<form 
+method="POST" 
+action="/upload_translation" 
+enctype="multipart/form-data">
+
+<input type="file" name="file" required>
+
+<input type="text" name="name" placeholder="Your Name" required>
+
+<input type="email" name="email" placeholder="Your Email" required>
+
+<input type="text" name="phone" placeholder="Phone Number" required>
+
+<button class="btn">
+Upload File
+</button>
+
 </form>
-<a class="whatsapp" href="https://wa.me/918851304467">
+
+</div>
+
+<!-- WHATSAPP -->
+
+<a 
+class="whatsapp" 
+href="https://wa.me/918851304467">
+
 💬 Chat on WhatsApp
+
 </a>
 
 </div>
@@ -179,7 +369,9 @@ footer {
 </div>
 
 <footer>
-© 2026 DAIVIK Translation Work
+
+© 2026 DAIVIK Translation Work | Premium Translation Services
+
 </footer>
 
 </body>
