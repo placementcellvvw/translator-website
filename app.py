@@ -157,8 +157,20 @@ def upload_translation():
         return redirect('/dashboard')
 
     return "Upload Failed"
+@app.route('/dashboard')
+def dashboard():
 
-    
+    files = TranslationFile.query.all()
+
+    return render_template('dashboard.html', files=files)
+    @app.route('/download/<filename>')
+def download_file(filename):
+
+    return send_from_directory(
+        TRANSLATED_FOLDER,
+        filename,
+        as_attachment=True
+    )
      
 if __name__ == "__main__":
     app.run(debug=True)
