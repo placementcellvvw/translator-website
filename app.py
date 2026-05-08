@@ -3,6 +3,7 @@ import requests
 from flask_sqlalchemy import SQLAlchemy
 import os
 from werkzeug.utils import secure_filename
+from flask import send_from_directory
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
 TRANSLATED_FOLDER = "translated"
@@ -143,6 +144,7 @@ def upload_translation():
 
         new_file = TranslationFile(
             filename=filename,
+            translated_file="",
             customer_name=name,
             email=email,
             phone=phone,
@@ -152,9 +154,11 @@ def upload_translation():
         db.session.add(new_file)
         db.session.commit()
 
-        return "File Uploaded Successfully"
+        return redirect('/dashboard')
 
     return "Upload Failed"
+
+    
      
 if __name__ == "__main__":
     app.run(debug=True)
