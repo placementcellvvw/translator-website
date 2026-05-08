@@ -155,11 +155,6 @@ def upload_translation():
         return "File Uploaded Successfully"
 
     return "Upload Failed"
-    @app.route('/pay/<int:file_id>')
-def pay(file_id):
-
-    file = TranslationFile.query.get(file_id)
-
-    return render_template('payment.html', file=file)  
+     
 if __name__ == "__main__":
     app.run(debug=True)
