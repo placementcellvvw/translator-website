@@ -1,31 +1,71 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
+<style>
+body{
+    font-family:Arial;
+    background:#111;
+    color:white;
+    padding:40px;
+}
+
+.card{
+    background:#222;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:15px;
+}
+
+.btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    background:#00c853;
+    color:white;
+    text-decoration:none;
+}
+
+.lock{
+    color:#ff5252;
+    font-weight:bold;
+}
+</style>
+
 </head>
+<body>
 
-<body style="font-family:sans-serif;padding:40px;">
+<h1>Uploaded Translation Files</h1>
 
-<h1>Client Dashboard</h1>
+{% for file in files %}
 
-<table border="1" cellpadding="10">
-<tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Message</th>
-</tr>
+<div class="card">
 
-{% for row in data %}
-<tr>
-    <td>{{ row.name }}</td>
-    <td>{{ row.email }}</td>
-    <td>{{ row.phone }}</td>
-    <td>{{ row.message }}</td>
-</tr>
+<h3>{{ file.filename }}</h3>
+
+<p>Name: {{ file.customer_name }}</p>
+
+<p>Email: {{ file.email }}</p>
+
+{% if file.paid %}
+
+<a class="btn" href="/download/{{ file.translated_file }}">
+Download Translated File
+</a>
+
+{% else %}
+
+<p class="lock">
+🔒 Payment Required Before Download
+</p>
+
+<img
+src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi://pay?pa=9818354183@ybl&pn=DAIVIK Translation Work&am=99&cu=INR">
+
+<p>Pay ₹49 per page and contact admin on WhatsApp</p>
+
+{% endif %}
+
+</div>
+
 {% endfor %}
-
-</table>
 
 </body>
 </html>
