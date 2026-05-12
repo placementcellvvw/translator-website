@@ -1,5 +1,14 @@
 <!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Translation Dashboard</title>
+
 <style>
+
 body{
     font-family:Arial;
     background:#111;
@@ -7,29 +16,96 @@ body{
     padding:40px;
 }
 
+h1{
+    text-align:center;
+    margin-bottom:40px;
+    color:#00e676;
+}
+
 .card{
     background:#222;
-    padding:20px;
-    margin-bottom:20px;
+    padding:25px;
+    margin-bottom:25px;
     border-radius:15px;
+    box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
+
+.card h3{
+    color:#00e676;
+    margin-bottom:10px;
+}
+
+p{
+    margin:8px 0;
 }
 
 .btn{
-    padding:10px 20px;
+    display:inline-block;
+    padding:12px 22px;
     border:none;
     border-radius:10px;
     background:#00c853;
     color:white;
     text-decoration:none;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.btn:hover{
+    background:#00e676;
 }
 
 .lock{
     color:#ff5252;
     font-weight:bold;
+    margin-top:15px;
 }
+
+.qr-box{
+    margin-top:20px;
+    text-align:center;
+}
+
+.qr-box img{
+    border-radius:15px;
+    background:white;
+    padding:10px;
+}
+
+.payment-text{
+    margin-top:10px;
+    color:#ddd;
+}
+
+.whatsapp{
+    display:inline-block;
+    margin-top:15px;
+    background:#25D366;
+    color:white;
+    padding:10px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.whatsapp:hover{
+    background:#1ebe5d;
+}
+
+.status-paid{
+    color:#00e676;
+    font-weight:bold;
+}
+
+.status-pending{
+    color:#ff5252;
+    font-weight:bold;
+}
+
 </style>
 
 </head>
+
 <body>
 
 <h1>Uploaded Translation Files</h1>
@@ -38,30 +114,61 @@ body{
 
 <div class="card">
 
-<h3>{{ file.filename }}</h3>
+    <h3>{{ file.filename }}</h3>
 
-<p>Name: {{ file.customer_name }}</p>
+    <p>
+        <strong>Customer:</strong>
+        {{ file.customer_name }}
+    </p>
 
-<p>Email: {{ file.email }}</p>
+    <p>
+        <strong>Email:</strong>
+        {{ file.email }}
+    </p>
 
-{% if file.paid %}
+    <p>
+        <strong>Phone:</strong>
+        {{ file.phone }}
+    </p>
 
-<a class="btn" href="/download/{{ file.translated_file }}">
-Download Translated File
-</a>
+    {% if file.paid %}
 
-{% else %}
+        <p class="status-paid">
+            ✅ Payment Completed
+        </p>
 
-<p class="lock">
-🔒 Payment Required Before Download
-</p>
+        <a class="btn" href="/download/{{ file.id }}">
+            Download Translated File
+        </a>
 
-<img
-src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi://pay?pa=9818354183@ybl&pn=DAIVIK Translation Work&am=99&cu=INR">
+    {% else %}
 
-<p>Pay ₹49 per page and contact admin on WhatsApp</p>
+        <p class="status-pending">
+            🔒 Payment Required Before Download
+        </p>
 
-{% endif %}
+        <div class="qr-box">
+
+            <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi://pay?pa=9818354183@ybl&pn=DAIVIK Translation Work&am=49&cu=INR"
+            alt="UPI QR">
+
+            <p class="payment-text">
+                Pay ₹49 per page using UPI
+            </p>
+
+            <a
+            class="whatsapp"
+            href="https://wa.me/919818354183"
+            target="_blank">
+
+            Contact on WhatsApp
+
+            </a>
+
+        </div>
+
+    {% endif %}
 
 </div>
 
