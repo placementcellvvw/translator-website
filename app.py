@@ -144,7 +144,7 @@ def upload_translation():
 
         new_file = TranslationFile(
             filename=filename,
-            translated_file="",
+            translated_file=filename,   # TEMPORARY
             customer_name=name,
             email=email,
             phone=phone,
@@ -154,9 +154,10 @@ def upload_translation():
         db.session.add(new_file)
         db.session.commit()
 
-        return redirect('/')
+        return redirect('/dashboard')
 
     return "Upload Failed"
+    
 @app.route('/dashboard')
 def dashboard():
 
