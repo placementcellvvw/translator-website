@@ -163,7 +163,10 @@ def dashboard():
     files = TranslationFile.query.all()
 
     return render_template('dashboard.html', files=files)
-    @app.route('/download/<filename>')
+
+
+# DOWNLOAD ROUTE
+@app.route('/download/<filename>')
 def download_file(filename):
 
     return send_from_directory(
