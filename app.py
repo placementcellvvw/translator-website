@@ -181,9 +181,8 @@ def download_file(file_id):
 
     file = TranslationFile.query.get_or_404(file_id)
 
-    # PAYMENT CHECK
     if not file.paid:
-        return "Please complete payment first."
+        return "Payment Required"
 
     return send_from_directory(
         TRANSLATED_FOLDER,
@@ -191,5 +190,35 @@ def download_file(file_id):
         as_attachment=True
     )
 
+# =========================
+# ADMIN TRANSLATED FILE UPLOAD
+# =========================
+
+@app.route('/admin/upload_translated/<int:file_id>', methods=['POST'])
+def upload_translated(file_id):
+
+    file_record = TranslationFile.query.get_or_404(file_id)
+
+    translated_file = request.files['translated_file']
+
+    if translated_file:
+
+        filename = secure_filename(translated_file.filename)
+
+        save_path = os.path.join(TRANSLATED_FOLDER, filename)
+
+        translated_file.save(save_path)
+
+        # SAVE FILE NAME
+        file_record.translated_file = filename
+
+        # AUTO PAYMENT APPROVED
+        file_record.paid = True
+
+        db.session.commit()
+
+        return redirect('/dashboard')
+
+    return "Upload Failed"
 if __name__ == "__main__":
     app.run(debug=True)
