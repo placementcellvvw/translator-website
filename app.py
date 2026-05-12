@@ -174,6 +174,21 @@ def download_file(filename):
         filename,
         as_attachment=True
     )
-     
+
+@app.route('/download/<int:file_id>')
+def download_file(file_id):
+
+    file = TranslationFile.query.get_or_404(file_id)
+
+    # PAYMENT CHECK
+    if not file.paid:
+        return "Please complete payment first."
+
+    return send_from_directory(
+        TRANSLATED_FOLDER,
+        file.translated_file,
+        as_attachment=True
+    )
+
 if __name__ == "__main__":
     app.run(debug=True)
