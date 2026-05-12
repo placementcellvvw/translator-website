@@ -42,7 +42,23 @@ body{
 <h1>Uploaded Files</h1>
 
 {% for file in files %}
+<form
+action="/admin/upload_translated/{{ file.id }}"
+method="POST"
+enctype="multipart/form-data">
 
+    <input
+    type="file"
+    name="translated_file"
+    required>
+
+    <button class="btn" type="submit">
+        Upload Translated File
+    </button>
+
+</form>
+
+<br>
 <div class="card">
 
     <h3>{{ file.filename }}</h3>
