@@ -154,7 +154,7 @@ def upload_translation():
         db.session.add(new_file)
         db.session.commit()
 
-        return redirect('/dashboard')
+        return redirect('/')
 
     return "Upload Failed"
 @app.route('/dashboard')
