@@ -161,9 +161,17 @@ def upload_translation():
 @app.route('/dashboard')
 def dashboard():
 
+    # Uploaded files
     files = TranslationFile.query.all()
 
-    return render_template('dashboard.html', files=files)
+    # Contact form data
+    contacts = Contact.query.all()
+
+    return render_template(
+        'dashboard.html',
+        files=files,
+        contacts=contacts
+    )
 
 
 # DOWNLOAD ROUTE
