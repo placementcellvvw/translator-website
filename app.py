@@ -1,23 +1,26 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, send_from_directory
 import requests
 from flask_sqlalchemy import SQLAlchemy
 import os
 from werkzeug.utils import secure_filename
-from flask import send_from_directory
+
 app = Flask(__name__)
+
+app.secret_key = "secret123"
+
 UPLOAD_FOLDER = "uploads"
 TRANSLATED_FOLDER = "translated"
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(TRANSLATED_FOLDER, exist_ok=True)
-app.secret_key = "secret123"
 
-# DATABASE (optional)
+# DATABASE
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
-# MODEL
+# CONTACT MODEL
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -25,6 +28,7 @@ class Contact(db.Model):
     phone = db.Column(db.String(20))
     message = db.Column(db.Text)
 
+# FILE MODEL
 class TranslationFile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(200))
@@ -33,22 +37,26 @@ class TranslationFile(db.Model):
     email = db.Column(db.String(100))
     phone = db.Column(db.String(20))
     paid = db.Column(db.Boolean, default=False)
+
 with app.app_context():
     db.create_all()
 
 # HOME PAGE
 @app.route("/", methods=["GET", "POST"])
 def home():
+
     msg = ""
     translated_text = ""
 
     if request.method == "POST":
 
-        # 🔹 AI TRANSLATION
+        # AI TRANSLATOR
         text = request.form.get("translate_text")
+
         if text:
             try:
                 url = "https://translate.googleapis.com/translate_a/single"
+
                 params = {
                     "client": "gtx",
                     "sl": "en",
@@ -56,26 +64,30 @@ def home():
                     "dt": "t",
                     "q": text
                 }
+
                 response = requests.get(url, params=params)
+
                 result = response.json()
+
                 translated_text = result[0][0][0]
+
             except:
                 translated_text = "Translation error"
 
-        # 🔹 CONTACT FORM + GOOGLE SHEET
+        # CONTACT FORM
         if request.form.get("name"):
 
-            # (Optional DB Save)
             new_contact = Contact(
                 name=request.form["name"],
                 email=request.form["email"],
                 phone=request.form["phone"],
                 message=request.form["message"]
             )
+
             db.session.add(new_contact)
             db.session.commit()
 
-            # 🔥 GOOGLE SHEET SEND
+            # GOOGLE SHEET SEND
             data = {
                 "name": request.form["name"],
                 "email": request.form["email"],
@@ -83,49 +95,54 @@ def home():
                 "message": request.form["message"]
             }
 
-            response = requests.post(
-                "https://script.google.com/macros/s/AKfycbwYO41lKGOvPvCCJj3456ERpLWV3hkGaDkM9Pse5wqwbNSrydveDKFfjYtrOM12Gopcwg/exec",
-                json=data
-            )
-
-            print("RESPONSE:", response.text)
+            try:
+                requests.post(
+                    "https://script.google.com/macros/s/AKfycbwYO41lKGOvPvCCJj3456ERpLWV3hkGaDkM9Pse5wqwbNSrydveDKFfjYtrOM12Gopcwg/exec",
+                    json=data
+                )
+            except:
+                pass
 
             msg = "Data saved successfully!"
 
-    return render_template("index.html", message=msg, translated=translated_text)
-
+    return render_template(
+        "index.html",
+        message=msg,
+        translated=translated_text
+    )
 
 # LOGIN
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     if request.method == "POST":
+
         if request.form["username"] == "admin" and request.form["password"] == "1234":
+
             session["admin"] = True
-            return redirect("/admin")
+
+            return redirect("/dashboard")
+
     return render_template("login.html")
 
-
-# ADMIN PANEL
-@app.route("/admin")
-def admin():
-    if not session.get("admin"):
-        return redirect("/login")
-    data = Contact.query.all()
-    return render_template("admin.html", data=data)
-
+# DASHBOARD
 @app.route("/dashboard")
 def dashboard():
-    try:
-        url = "https://script.google.com/macros/s/AKfycbwYO41lKGOvPvCCJj3456ERpLWV3hkGaDkM9Pse5wqwbNSrydveDKFfjYtrOM12Gopcwg/exec"
 
-        response = requests.get(url)
-        data = response.json()
+    if not session.get("admin"):
+        return redirect("/login")
 
-        return render_template("dashboard.html", data=data)
+    files = TranslationFile.query.all()
 
-    except Exception as e:
-        return "Data load failed: " + str(e)
+    contacts = Contact.query.all()
 
+    return render_template(
+        "dashboard.html",
+        files=files,
+        contacts=contacts
+    )
+
+# FILE UPLOAD
 @app.route('/upload_translation', methods=['POST'])
 def upload_translation():
 
@@ -138,13 +155,16 @@ def upload_translation():
 
         filename = secure_filename(file.filename)
 
-        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        filepath = os.path.join(
+            UPLOAD_FOLDER,
+            filename
+        )
 
         file.save(filepath)
 
         new_file = TranslationFile(
             filename=filename,
-            translated_file=filename,   # TEMPORARY
+            translated_file="",
             customer_name=name,
             email=email,
             phone=phone,
@@ -157,24 +177,8 @@ def upload_translation():
         return redirect('/dashboard')
 
     return "Upload Failed"
-    
-@app.route('/dashboard')
-def dashboard():
 
-    # Uploaded files
-    files = TranslationFile.query.all()
-
-    # Contact form data
-    contacts = Contact.query.all()
-
-    return render_template(
-        'dashboard.html',
-        files=files,
-        contacts=contacts
-    )
-
-
-# DOWNLOAD ROUTE
+# DOWNLOAD FILE
 @app.route('/download/<filename>')
 def download_file(filename):
 
@@ -184,49 +188,5 @@ def download_file(filename):
         as_attachment=True
     )
 
-@app.route('/download/<int:file_id>')
-def download_file(file_id):
-
-    file = TranslationFile.query.get_or_404(file_id)
-
-    if not file.paid:
-        return "Payment Required"
-
-    return send_from_directory(
-        TRANSLATED_FOLDER,
-        file.translated_file,
-        as_attachment=True
-    )
-
-# =========================
-# ADMIN TRANSLATED FILE UPLOAD
-# =========================
-
-@app.route('/admin/upload_translated/<int:file_id>', methods=['POST'])
-def upload_translated(file_id):
-
-    file_record = TranslationFile.query.get_or_404(file_id)
-
-    translated_file = request.files['translated_file']
-
-    if translated_file:
-
-        filename = secure_filename(translated_file.filename)
-
-        save_path = os.path.join(TRANSLATED_FOLDER, filename)
-
-        translated_file.save(save_path)
-
-        # SAVE FILE NAME
-        file_record.translated_file = filename
-
-        # AUTO PAYMENT APPROVED
-        file_record.paid = True
-
-        db.session.commit()
-
-        return redirect('/dashboard')
-
-    return "Upload Failed"
 if __name__ == "__main__":
     app.run(debug=True)
