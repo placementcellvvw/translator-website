@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <title>Dashboard</title>
@@ -8,29 +7,43 @@
 <style>
 
 body{
-    background:#111;
-    color:white;
+    background:#0f172a;
     font-family:Arial;
+    color:white;
     padding:40px;
 }
 
+h1{
+    margin-bottom:30px;
+}
+
 .card{
-    background:#222;
-    padding:20px;
-    margin-bottom:20px;
-    border-radius:10px;
+    background:#1e293b;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:25px;
 }
 
 .btn{
-    background:green;
+    display:inline-block;
+    padding:12px 20px;
+    border-radius:10px;
+    background:#00c853;
     color:white;
-    padding:10px 20px;
     text-decoration:none;
-    border-radius:8px;
+    margin-top:15px;
 }
 
 .lock{
-    color:red;
+    color:#ff5252;
+    font-weight:bold;
+}
+
+img{
+    margin-top:15px;
+    border-radius:15px;
+    background:white;
+    padding:10px;
 }
 
 </style>
@@ -39,62 +52,55 @@ body{
 
 <body>
 
-<h1>Uploaded Files</h1>
+<h1>📂 Uploaded Files</h1>
 
 {% for file in files %}
-<form
-action="/admin/upload_translated/{{ file.id }}"
-method="POST"
-enctype="multipart/form-data">
 
-    <input
-    type="file"
-    name="translated_file"
-    required>
-
-    <button class="btn" type="submit">
-        Upload Translated File
-    </button>
-
-</form>
-
-<br>
 <div class="card">
 
-    <h3>{{ file.filename }}</h3>
+<h2>{{ file.filename }}</h2>
 
-    <p>{{ file.customer_name }}</p>
+<p>Name: {{ file.customer_name }}</p>
 
-    <p>{{ file.email }}</p>
+<p>Email: {{ file.email }}</p>
 
-    {% if file.paid %}
+<p>Phone: {{ file.phone }}</p>
 
-        <a class="btn" href="/download/{{ file.id }}">
-            Download File
-        </a>
+{% if file.paid %}
 
-    {% else %}
+<a class="btn"
+href="/download/{{ file.translated_file }}">
 
-        <p class="lock">
-            Payment Required
-        </p>
+Download Translated File
 
-        <img
-        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9818354183@ybl&pn=DAIVIK&am=49&cu=INR">
+</a>
 
-    {% endif %}
+{% else %}
+
+<p class="lock">
+
+🔒 Payment Required Before Download
+
+</p>
+
+<img
+src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi://pay?pa=9818354183@ybl&pn=DAIVIK Translation Work&am=99&cu=INR">
+
+<p>Pay ₹99 and contact admin on WhatsApp</p>
+
+{% endif %}
 
 </div>
 
 {% endfor %}
-    
-<h1>Contact Form Data</h1>
+
+<h1>📩 Contact Form Data</h1>
 
 {% for contact in contacts %}
 
 <div class="card">
 
-<h3>{{ contact.name }}</h3>
+<h2>{{ contact.name }}</h2>
 
 <p>Email: {{ contact.email }}</p>
 
@@ -105,5 +111,6 @@ enctype="multipart/form-data">
 </div>
 
 {% endfor %}
+
 </body>
 </html>
