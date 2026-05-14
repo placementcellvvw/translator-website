@@ -87,6 +87,23 @@ enctype="multipart/form-data">
 </div>
 
 {% endfor %}
+    
+<h1>Contact Form Data</h1>
 
+{% for contact in contacts %}
+
+<div class="card">
+
+<h3>{{ contact.name }}</h3>
+
+<p>Email: {{ contact.email }}</p>
+
+<p>Phone: {{ contact.phone }}</p>
+
+<p>Message: {{ contact.message }}</p>
+
+</div>
+
+{% endfor %}
 </body>
 </html>
