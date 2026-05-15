@@ -128,33 +128,39 @@ footer {
 </form>
 <h2 style="margin-top:40px;">Upload Translation File</h2>
 
+<h3>Upload File</h3>
+
 <form method="POST"
-      action="/upload_translation"
-      enctype="multipart/form-data"
-      class="upload-box">
+action="/upload_translation"
+enctype="multipart/form-data">
 
-    <input type="text"
-           name="name"
-           placeholder="Your Name"
-           required>
+<input
+type="text"
+name="name"
+placeholder="Your Name"
+required>
 
-    <input type="email"
-           name="email"
-           placeholder="Your Email"
-           required>
+<input
+type="email"
+name="email"
+placeholder="Your Email"
+required>
 
-    <input type="text"
-           name="phone"
-           placeholder="Phone Number"
-           required>
+<input
+type="text"
+name="phone"
+placeholder="Phone Number"
+required>
 
-    <input type="file"
-           name="file"
-           required>
+<input
+type="file"
+name="file"
+required>
 
-    <button class="btn">
-        Upload File
-    </button>
+<button class="btn">
+Upload File
+</button>
+
 </form>
 <p style="color:lightgreen;">{{ message }}</p>
 
